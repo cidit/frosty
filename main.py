@@ -2,13 +2,13 @@ from argparse import ArgumentParser
 
 parser = ArgumentParser("frosty")
 subparsers = parser.add_subparsers(dest='subparser_name')
-predict_cmd = subparsers.add_parser("predict")
-predict_cmd.add_argument("-T", "--temperature", type=float, help="C")
-predict_cmd.add_argument("-H", "--relative_humidity", type=float, help="%")
-predict_cmd.add_argument("-V", "--air_velocity", type=float, help="m/s")
-predict_cmd.add_argument("-C", "--cloudiness", type=float, help="%")
-predict_cmd.add_argument("-D", "--dew_point", type=float, help="C")
-predict_cmd.add_argument("-R", "--raw_radiation", type=float, help="W/m^2")
+predict_cmd = subparsers.add_parser("predict", help="pass arguments to make a prediction")
+predict_cmd.add_argument("-t", "--temperature", type=float, help="C")
+predict_cmd.add_argument("-u", "--relative_humidity", type=float, help="%")
+predict_cmd.add_argument("-v", "--air_velocity", type=float, help="m/s")
+predict_cmd.add_argument("-c", "--cloudiness", type=float, help="%")
+predict_cmd.add_argument("-d", "--dew_point", type=float, help="C")
+predict_cmd.add_argument("-r", "--raw_radiation", type=float, help="W/m^2")
 
 
 def white_frost(t, h, v, c, d, r):
@@ -51,9 +51,10 @@ def predict(t, h, v, c, d, r):
 def main():
     print("Hello from frosty!")
     args = parser.parse_args()
+    print(args)
     if args.subparser_name == "predict":
-        result = predict(args.T, args.H, args.V, args.C, args.D, args.R)
-        print(f"predicted: {result}")
+        result = predict(args.temperature, args.relative_humidity, args.air_velocity, args.cloudiness, args.dew_point, args.raw_radiation)
+        # print(result)
     else:
         print("TODO: open a gui or smth?")
 
